@@ -1,4 +1,4 @@
-from parser import parser
+import parser as parser
 
 if __name__ == '__main__':
     while True:
@@ -8,4 +8,5 @@ if __name__ == '__main__':
             break
         if not s: continue
         result = parser.parse(s)
+
         print(f"Postfix: {result}")

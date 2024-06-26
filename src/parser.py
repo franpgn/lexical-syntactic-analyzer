@@ -1,34 +1,67 @@
-import ply.yacc as yacc
+from ply.yacc import yacc
 from lexer import tokens
 
-def p_expression_plus(p):
-    'expression : LPAREN PLUS expression expression RPAREN'
-    p[0] = f"{p[3]} {p[4]} +"
+# Functions for each rule of the grammar
+def p_expression(p):
+    '''
+    expression : PLUS expression term
+               | MINUS expression term
+               | DIVIDE expression term
+               | DIVIDE NUMBER NUMBER
+    '''
+    p[0] = (f"{p[2]}, {p[3]}, {p[1]}")
 
-def p_expression_minus(p):
-    'expression : LPAREN MINUS expression expression RPAREN'
-    p[0] = f"{p[3]} {p[4]} -"
+def p_expression_term(p):
+    '''
+    expression : term
+    '''
+    p[0] = (f"{p[1]}")
 
-def p_expression_mult(p):
-    'expression : LPAREN MULT expression expression RPAREN'
-    p[0] = f"{p[3]} {p[4]} *"
+def p_term_times(p):
+    '''
+    term : TIMES term factor
+    '''
+    p[0] = (f"{p[3]}, {p[2]}, {p[1]}")
 
-def p_expression_div(p):
-    'expression : LPAREN DIV expression expression RPAREN'
-    p[0] = f"{p[3]} {p[4]} /"
+def p_excpetion_times(p):
+    '''
+    term : TIMES term NUMBER
+         | TIMES term ID
+         | DIVIDE NUMBER term
+         | DIVIDE ID term
+    '''
+    p[0] = (f"{p[2]}, {p[3]}, {p[1]}")
 
-def p_expression_id(p):
-    'expression : ID'
+def p_term_factor(p):
+    '''
+    term : factor
+    '''
     p[0] = p[1]
 
-def p_expression_number(p):
-    'expression : NUMBER'
-    p[0] = p[1]
+def p_factor_number(p):
+    '''
+    factor : NUMBER
+    '''
+    p[0] = str(p[1])
+
+def p_factor_id(p):
+    '''
+    factor : ID
+    '''
+    p[0] = (f"{p[1]}")
+
+def p_factor_grouped(p):
+    '''
+    factor : LPAREN expression RPAREN
+    '''
+    p[0] = (f"{p[2]}")
 
 def p_error(p):
-    print("Syntax error in input!")
+    print(f"Syntax error")
 
-parser = yacc.yacc()
+parser = yacc()
 
 def parse(input):
-    return parser.parse(input)
+    result = parser.parse(input)
+    final_result = result.replace(",", "")
+    return final_result

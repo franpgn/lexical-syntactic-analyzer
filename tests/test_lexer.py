@@ -21,13 +21,13 @@ class TestLexer(unittest.TestCase):
     def test_token_mult(self):
         self.lexer.input('*')
         token = self.lexer.token()
-        self.assertEqual(token.type, 'MULT')
+        self.assertEqual(token.type, 'TIMES')
         self.assertEqual(token.value, '*')
 
     def test_token_div(self):
         self.lexer.input('/')
         token = self.lexer.token()
-        self.assertEqual(token.type, 'DIV')
+        self.assertEqual(token.type, 'DIVIDE')
         self.assertEqual(token.value, '/')
 
     def test_token_lparen(self):
