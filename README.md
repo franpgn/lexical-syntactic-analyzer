@@ -11,6 +11,7 @@ This project converts LISP expressions to postfix notation using a lexer and par
 - [File Structure](#file-structure)
 - [Tests](#tests)
 - [License](#license)
+- [References](#references)
 
 ## Introduction
 
@@ -96,3 +97,8 @@ These tests ensure that the lexer and parser are functioning correctly and can h
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+## References
+
+- [PLY Documentation](https://github.com/dabeaz/ply/blob/master/doc/ply.md)
+- [PLY GitHub Repository](https://github.com/dabeaz/ply?tab=readme-ov-file)
