@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIV ID LPAREN MINUS MULT NUMBER PLUS RPARENexpression : LPAREN PLUS expression expression RPARENexpression : LPAREN MINUS expression expression RPARENexpression : LPAREN MULT expression expression RPARENexpression : LPAREN DIV expression expression RPARENexpression : IDexpression : NUMBER'
+_lr_signature = 'DIVIDE ID LPAREN MINUS NUMBER PLUS RPAREN TIMES\n    expression : PLUS term term\n               | MINUS term term\n    \n    expression : term\n    \n    term : TIMES factor factor\n         | DIVIDE factor factor\n    \n    term : factor\n    \n    factor : NUMBER\n    \n    factor : ID\n    \n    factor : PLUS factor\n           | MINUS factor\n    \n    factor : LPAREN expression RPAREN\n    '
     
-_lr_action_items = {'LPAREN':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[2,-5,-6,2,2,2,2,2,2,2,2,-1,-2,-3,-4,]),'ID':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[3,-5,-6,3,3,3,3,3,3,3,3,-1,-2,-3,-4,]),'NUMBER':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[4,-5,-6,4,4,4,4,4,4,4,4,-1,-2,-3,-4,]),'$end':([1,3,4,17,18,19,20,],[0,-5,-6,-1,-2,-3,-4,]),'PLUS':([2,],[5,]),'MINUS':([2,],[6,]),'MULT':([2,],[7,]),'DIV':([2,],[8,]),'RPAREN':([3,4,13,14,15,16,17,18,19,20,],[-5,-6,17,18,19,20,-1,-2,-3,-4,]),}
+_lr_action_items = {'PLUS':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[2,11,11,11,11,-7,-8,2,11,11,-6,11,11,-6,11,11,-9,-10,-4,-5,-11,]),'MINUS':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[4,14,14,14,14,-7,-8,4,14,14,-6,14,14,-6,14,14,-9,-10,-4,-5,-11,]),'TIMES':([0,2,4,8,9,10,12,13,15,16,20,22,24,25,26,],[5,5,5,-7,-8,5,5,-6,5,-6,-9,-10,-4,-5,-11,]),'DIVIDE':([0,2,4,8,9,10,12,13,15,16,20,22,24,25,26,],[7,7,7,-7,-8,7,7,-6,7,-6,-9,-10,-4,-5,-11,]),'NUMBER':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[8,8,8,8,8,-7,-8,8,8,8,-6,8,8,-6,8,8,-9,-10,-4,-5,-11,]),'ID':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[9,9,9,9,9,-7,-8,9,9,9,-6,9,9,-6,9,9,-9,-10,-4,-5,-11,]),'LPAREN':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[10,10,10,10,10,-7,-8,10,10,10,-6,10,10,-6,10,10,-9,-10,-4,-5,-11,]),'$end':([1,3,6,8,9,13,16,20,21,22,23,24,25,26,],[0,-3,-6,-7,-8,-9,-10,-9,-1,-10,-2,-4,-5,-11,]),'RPAREN':([3,6,8,9,13,16,19,20,21,22,23,24,25,26,],[-3,-6,-7,-8,-9,-10,26,-9,-1,-10,-2,-4,-5,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,5,6,7,8,9,10,11,12,],[1,9,10,11,12,13,14,15,16,]),}
+_lr_goto_items = {'expression':([0,10,],[1,19,]),'term':([0,2,4,10,12,15,],[3,12,15,3,21,23,]),'factor':([0,2,4,5,7,10,11,12,14,15,17,18,],[6,13,16,17,18,6,20,6,22,6,24,25,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,10 +27,15 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
-  ('expression -> LPAREN PLUS expression expression RPAREN','expression',5,'p_expression_plus','parser.py',5),
-  ('expression -> LPAREN MINUS expression expression RPAREN','expression',5,'p_expression_minus','parser.py',9),
-  ('expression -> LPAREN MULT expression expression RPAREN','expression',5,'p_expression_mult','parser.py',13),
-  ('expression -> LPAREN DIV expression expression RPAREN','expression',5,'p_expression_div','parser.py',17),
-  ('expression -> ID','expression',1,'p_expression_id','parser.py',21),
-  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',25),
+  ('expression -> PLUS term term','expression',3,'p_expression','parser.py',25),
+  ('expression -> MINUS term term','expression',3,'p_expression','parser.py',26),
+  ('expression -> term','expression',1,'p_expression_term','parser.py',32),
+  ('term -> TIMES factor factor','term',3,'p_term','parser.py',38),
+  ('term -> DIVIDE factor factor','term',3,'p_term','parser.py',39),
+  ('term -> factor','term',1,'p_term_factor','parser.py',45),
+  ('factor -> NUMBER','factor',1,'p_factor_number','parser.py',51),
+  ('factor -> ID','factor',1,'p_factor_id','parser.py',57),
+  ('factor -> PLUS factor','factor',2,'p_factor_unary','parser.py',63),
+  ('factor -> MINUS factor','factor',2,'p_factor_unary','parser.py',64),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_grouped','parser.py',70),
 ]
