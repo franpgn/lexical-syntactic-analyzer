@@ -7,30 +7,20 @@ def p_expression(p):
     expression : PLUS expression term
                | MINUS expression term
                | DIVIDE expression term
-               | DIVIDE NUMBER NUMBER
     '''
     p[0] = (f"{p[2]}, {p[3]}, {p[1]}")
+
+def p_expression_times(p):
+    '''
+    expression : TIMES expression term
+    '''
+    p[0] = (f"{p[3]}, {p[2]}, {p[1]}")
 
 def p_expression_term(p):
     '''
     expression : term
     '''
     p[0] = (f"{p[1]}")
-
-def p_term_times(p):
-    '''
-    term : TIMES term factor
-    '''
-    p[0] = (f"{p[3]}, {p[2]}, {p[1]}")
-
-def p_excpetion_times(p):
-    '''
-    term : TIMES term NUMBER
-         | TIMES term ID
-         | DIVIDE NUMBER term
-         | DIVIDE ID term
-    '''
-    p[0] = (f"{p[2]}, {p[3]}, {p[1]}")
 
 def p_term_factor(p):
     '''

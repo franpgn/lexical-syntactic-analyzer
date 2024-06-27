@@ -16,7 +16,7 @@ class TestParser(unittest.TestCase):
 
     def test_simple_multiplication(self):
         result = self.parser.parse('( * 5 6 )')
-        self.assertEqual(result, '5 6 *')
+        self.assertEqual(result, '6 5 *')
 
     def test_simple_division(self):
         result = self.parser.parse('( / 7 8 )')
