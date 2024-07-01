@@ -53,5 +53,6 @@ parser = yacc()
 
 def parse(input):
     result = parser.parse(input)
-    final_result = result.replace(",", "")
-    return final_result
+    if ( result != None ):
+        result = result.replace(",", "")
+    return result
