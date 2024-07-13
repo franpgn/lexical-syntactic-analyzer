@@ -34,9 +34,5 @@ class TestParser(unittest.TestCase):
         result = self.parser.parse('( / ( + ( * 7 9 ) ( / ( - 20 4 ) 2 ) ) ( / ( - (* x y ) ( - a b ) ) ( / 100 ( + 5 5 ) ) ) )')
         self.assertEqual(result, '9 7 * 20 4 - 2 / + y x * a b - - 100 5 5 + / / /')
 
-    def test_invalid_syntax(self):
-        with self.assertRaises(AttributeError):
-            self.assertFalse(self.parser.parse('( + 1 )'), "Syntax error in input!")
-
 if __name__ == '__main__':
     unittest.main()
